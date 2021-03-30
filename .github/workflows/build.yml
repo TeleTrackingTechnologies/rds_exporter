@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - master
-      - "*"
 
 env:
   DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
