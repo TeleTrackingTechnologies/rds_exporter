@@ -1,0 +1,35 @@
+
+---
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - "*"
+
+env:
+  DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  DOCKER_REPOSITORY: ${{ github.repository }}
+
+jobs:
+  build:
+    if: "! contains(github.event.commits[0].message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build images
+        run: |
+          ./ci-scripts/docker-build.sh "${DOCKER_REPOSITORY}"
+      # master branch only
+      - name: Log into registry
+        if: "contains(github.ref, 'master')"
+        run: echo "${DOCKER_PASSWORD}" | docker login -u $DOCKER_USER --password-stdin
+      
+      - name: Push Images
+        if: "contains(github.ref, 'master')"
+        run: ./ci-scripts/release.sh "${DOCKER_REPOSITORY}"
