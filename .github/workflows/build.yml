@@ -24,6 +24,7 @@ jobs:
       - name: Bump Version
         run: |
           pip install semversioner==0.6.16
+          export PATH="$HOME/.local/bin:$PATH"
           ./ci-scripts/bump-version.sh
 
       - name: Build images
@@ -47,4 +48,3 @@ jobs:
           github_token: ${{ secrets.TELECI_GITHUB_TOKEN }}
           branch: master
           tags: true
-          
