@@ -7,3 +7,5 @@ IMAGE="teletracking/rds_exporter"
 VERSION=$(semversioner current-version)
 
 docker push "${IMAGE}:${VERSION}"
+
+docker push "${IMAGE}:latest"

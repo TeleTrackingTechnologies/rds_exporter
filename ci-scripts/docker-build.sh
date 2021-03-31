@@ -5,3 +5,5 @@ IMAGE="teletracking/rds_exporter"
 VERSION=$(semversioner current-version)
 
 docker build -t "${IMAGE}:${VERSION}" .
+
+docker build -t "${IMAGE}:latest" .
