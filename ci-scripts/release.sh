@@ -4,5 +4,6 @@
 set -euo pipefail
 
 IMAGE="teletracking/rds_exporter"
+VERSION=$(semversioner current-version)
 
-docker push "${IMAGE}:latest"
+docker push "${IMAGE}:${VERSION}"

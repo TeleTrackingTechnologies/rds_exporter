@@ -2,4 +2,6 @@
 
 set -euo pipefail
 IMAGE="teletracking/rds_exporter"
-docker build -t "${IMAGE}:latest" .
+VERSION=$(semversioner current-version)
+
+docker build -t "${IMAGE}:${VERSION}" .
