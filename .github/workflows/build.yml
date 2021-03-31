@@ -29,6 +29,7 @@ jobs:
 
       - name: Build images
         run: |
+          export PATH="$HOME/.local/bin:$PATH"
           ./ci-scripts/docker-build.sh "${DOCKER_REPOSITORY}"
           ./ci-scripts/git-tag.sh
 
@@ -39,7 +40,9 @@ jobs:
       
       - name: Push Images
         if: "contains(github.ref, 'master')"
-        run: ./ci-scripts/release.sh "${DOCKER_REPOSITORY}"
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          ./ci-scripts/release.sh "${DOCKER_REPOSITORY}"
       
       - name: Push changes
         if: "contains(github.ref, 'master')"
